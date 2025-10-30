@@ -4,6 +4,7 @@
  */
 
 export const ENDPOINTS = {
+
   // Auth endpoints
   auth: {
     login: '/auth/login',
@@ -14,73 +15,29 @@ export const ENDPOINTS = {
   },
 
   // Dueños (Owners) endpoints
-  duenos: {
-    list: '/duenos',
-    create: '/duenos',
-    getById: (id: number) => `/duenos/${id}`,
-    update: (id: number) => `/duenos/${id}`,
-    delete: (id: number) => `/duenos/${id}`,
-    search: '/duenos/search',
+  dueno: {
+    list: '/dueno',
+    create: '/dueno',
+    getById: (id: string) => `/dueno/${id}`,
+    update: (id: string) => `/dueno/${id}`,
+    delete: (id: string) => `/dueno/${id}`,
+    search: '/dueno/search',
     // Mascotas de un dueño específico
-    mascotas: (duenoId: number) => `/duenos/${duenoId}/mascotas`,
+    mascotas: (duenoId: string) => `/dueno/${duenoId}/mascotas`,
   },
 
   // Mascotas (Pets) endpoints
-  mascotas: {
-    list: '/mascotas',
-    create: '/mascotas',
-    getById: (id: number) => `/mascotas/${id}`,
-    update: (id: number) => `/mascotas/${id}`,
-    delete: (id: number) => `/mascotas/${id}`,
-    search: '/mascotas/search',
+  mascota: {
+    list: '/mascota',
+    create: '/mascota',
+    getById: (id: number) => `/mascota/${id}`,
+    update: (id: number) => `/mascota/${id}`,
+    delete: (id: number) => `/mascota/${id}`,
+    search: '/mascota/search',
     // Vacunas de una mascota específica
-    vacunas: (mascotaId: number) => `/mascotas/${mascotaId}/vacunas`,
+    vacunas: (mascotaId: number) => `/mascota/${mascotaId}/vacunas`,
     // Historial médico
-    historial: (mascotaId: number) => `/mascotas/${mascotaId}/historial`,
-  },
-
-  // Vacunas (Vaccines) endpoints
-  vacunas: {
-    list: '/vacunas',
-    create: '/vacunas',
-    getById: (id: number) => `/vacunas/${id}`,
-    update: (id: number) => `/vacunas/${id}`,
-    delete: (id: number) => `/vacunas/${id}`,
-    // Próximas vacunas
-    proximas: '/vacunas/proximas',
-    // Vacunas vencidas
-    vencidas: '/vacunas/vencidas',
-  },
-
-  // Documentos endpoints
-  documentos: {
-    list: '/documentos',
-    upload: '/documentos/upload',
-    getById: (id: number) => `/documentos/${id}`,
-    download: (id: number) => `/documentos/${id}/download`,
-    delete: (id: number) => `/documentos/${id}`,
-    // Por mascota
-    byMascota: (mascotaId: number) => `/mascotas/${mascotaId}/documentos`,
-  },
-
-  // Reportes endpoints
-  reportes: {
-    general: '/reportes/general',
-    mascotas: '/reportes/mascotas',
-    vacunas: '/reportes/vacunas',
-    duenos: '/reportes/duenos',
-    // Exportar reportes
-    export: (tipo: 'pdf' | 'excel') => `/reportes/export/${tipo}`,
-  },
-
-  // Usuarios (si tienes gestión de usuarios)
-  usuarios: {
-    list: '/usuarios',
-    create: '/usuarios',
-    getById: (id: number) => `/usuarios/${id}`,
-    update: (id: number) => `/usuarios/${id}`,
-    delete: (id: number) => `/usuarios/${id}`,
-    changePassword: (id: number) => `/usuarios/${id}/password`,
+    historial: (mascotaId: number) => `/mascota/${mascotaId}/historial`,
   },
 } as const
 
@@ -106,6 +63,5 @@ export function buildQueryString(params: Record<string, any>): string {
  */
 export type EndpointKeys = keyof typeof ENDPOINTS
 export type AuthEndpoints = typeof ENDPOINTS.auth
-export type DuenosEndpoints = typeof ENDPOINTS.duenos
-export type MascotasEndpoints = typeof ENDPOINTS.mascotas
-export type VacunasEndpoints = typeof ENDPOINTS.vacunas
+export type DuenoEndpoints = typeof ENDPOINTS.dueno
+export type MascotaEndpoints = typeof ENDPOINTS.mascota
