@@ -1,10 +1,5 @@
-function DuenosPage() {
-    return (
-        <div>
-            <h1>Lista de Dueños</h1>
-            {/* Aquí puedes agregar la lógica para mostrar la lista de dueños */}
-        </div>
-    );
-}
+import DuenosClient from "@/src/features/admin-dashboard/duenos/components/DuenosClient";
 
-export default DuenosPage;
+export default function DuenosPage() {
+    return <DuenosClient />;
+}
