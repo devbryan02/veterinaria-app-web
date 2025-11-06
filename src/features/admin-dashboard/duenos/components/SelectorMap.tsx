@@ -248,7 +248,7 @@ export default function SelectorMap({
 
         {/* Resultados de búsqueda */}
         {showResults && (
-          <div className="absolute top-full left-0 right-0 z-[999] mt-1 bg-white border border-gray-200 rounded-md shadow-xl max-h-40 overflow-y-auto">
+          <div className="absolute top-full left-0 right-0 z-999 mt-1 bg-white border border-gray-200 rounded-md shadow-xl max-h-40 overflow-y-auto">
             {isSearching && (
               <div className="p-4">
                 <div className="flex items-center gap-2 text-sm text-gray-500">
