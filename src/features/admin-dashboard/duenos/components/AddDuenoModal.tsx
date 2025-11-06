@@ -97,7 +97,7 @@ export default function AddDuenoModal({ open, onOpenChange }: AddDuenoModalProps
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent 
-        className="max-w-none w-[95vw] h-[95vh] sm:w-[95vw] md:w-[95vw] lg:w-[95vw] xl:w-[95vw] flex flex-col overflow-hidden"
+        className="max-w-none w-[95vw] h-[95vh] flex flex-col overflow-hidden p-0"
         style={{ 
           width: '95vw', 
           maxWidth: '1600px', 
@@ -105,18 +105,20 @@ export default function AddDuenoModal({ open, onOpenChange }: AddDuenoModalProps
           minHeight: '600px'
         }}
       >
-        <DialogHeader className="shrink-0 pb-4">
+        {/* Header fijo */}
+        <DialogHeader className="shrink-0 p-6 pb-4 border-b">
           <DialogTitle className="text-xl font-semibold">Agregar Nuevo Dueño</DialogTitle>
           <DialogDescription className="text-gray-600">
             Completa toda la información del propietario de la mascota incluyendo su ubicación.
           </DialogDescription>
         </DialogHeader>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col h-full">
-            <div className="flex-1 min-h-0">
+        {/* Contenido con scroll */}
+        <div className="flex-1 overflow-y-auto p-6">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="h-full">
               {/* Layout para pantallas grandes */}
-              <div className="hidden xl:block h-full">
+              <div className="hidden xl:block h-full min-h-[500px]">
                 <div className="grid grid-cols-5 gap-6 h-full">
                   {/* Columna izquierda - Información Personal (2 columnas) */}
                   <div className="col-span-2 space-y-4">
@@ -206,7 +208,7 @@ export default function AddDuenoModal({ open, onOpenChange }: AddDuenoModalProps
                               <FormControl>
                                 <Textarea 
                                   placeholder="Av. Ejemplo 123, Distrito, Ciudad..."
-                                  className="min-h-[70px] max-h-[70px] resize-none text-sm"
+                                  className="min-h-[60px] max-h-[60px] resize-none text-sm"
                                   {...field} 
                                 />
                               </FormControl>
@@ -215,7 +217,7 @@ export default function AddDuenoModal({ open, onOpenChange }: AddDuenoModalProps
                           )}
                         />
 
-                        <Separator className="my-3" />
+                        <Separator className="my-2" />
 
                         {/* Coordenadas */}
                         <div>
@@ -280,7 +282,7 @@ export default function AddDuenoModal({ open, onOpenChange }: AddDuenoModalProps
               </div>
 
               {/* Layout para pantallas medianas y pequeñas usando Tabs */}
-              <div className="block xl:hidden h-full">
+              <div className="block xl:hidden h-full min-h-[500px]">
                 <Tabs defaultValue="info" className="h-full flex flex-col">
                   <TabsList className="grid w-full grid-cols-2 mb-4">
                     <TabsTrigger value="info">Información Personal</TabsTrigger>
@@ -372,7 +374,7 @@ export default function AddDuenoModal({ open, onOpenChange }: AddDuenoModalProps
                             <FormControl>
                               <Textarea 
                                 placeholder="Av. Ejemplo 123, Distrito, Ciudad..."
-                                className="min-h-[100px] resize-none"
+                                className="min-h-20 resize-none"
                                 {...field} 
                               />
                             </FormControl>
@@ -398,6 +400,7 @@ export default function AddDuenoModal({ open, onOpenChange }: AddDuenoModalProps
                                     placeholder="-13.162479" 
                                     {...field} 
                                     readOnly 
+                                    className="bg-gray-50"
                                   />
                                 </FormControl>
                                 <FormMessage />
@@ -416,6 +419,7 @@ export default function AddDuenoModal({ open, onOpenChange }: AddDuenoModalProps
                                     placeholder="-74.213383" 
                                     {...field} 
                                     readOnly 
+                                    className="bg-gray-50"
                                   />
                                 </FormControl>
                                 <FormMessage />
@@ -428,7 +432,7 @@ export default function AddDuenoModal({ open, onOpenChange }: AddDuenoModalProps
                   </TabsContent>
 
                   <TabsContent value="location" className="flex-1 mt-0">
-                    <div className="h-full">
+                    <div className="h-full min-h-[400px]">
                       <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 h-full">
                         <SelectorMap
                           onPositionChange={handleMapPositionChange}
@@ -439,30 +443,32 @@ export default function AddDuenoModal({ open, onOpenChange }: AddDuenoModalProps
                   </TabsContent>
                 </Tabs>
               </div>
-            </div>
+            </form>
+          </Form>
+        </div>
 
-            <Separator className="my-4" />
-
-            <DialogFooter className="shrink-0 flex flex-col sm:flex-row justify-end gap-3">
-              <Button 
-                type="button" 
-                variant="outline" 
-                onClick={() => onOpenChange(false)}
-                disabled={isSubmitting}
-                className="px-6 h-9 w-full sm:w-auto"
-              >
-                Cancelar
-              </Button>
-              <Button 
-                type="submit" 
-                disabled={isSubmitting || loading}
-                className="px-6 h-9 w-full sm:w-auto"
-              >
-                {isSubmitting ? "Guardando..." : "Crear Dueño"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
+        {/* Footer fijo con botones */}
+        <DialogFooter className="shrink-0 p-6 pt-4 border-t ">
+          <div className="flex flex-col sm:flex-row justify-end gap-3 w-full">
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={() => onOpenChange(false)}
+              disabled={isSubmitting}
+              className="px-6 h-10 w-full sm:w-auto"
+            >
+              Cancelar
+            </Button>
+            <Button 
+              type="submit" 
+              disabled={isSubmitting || loading}
+              className="px-6 h-10 w-full sm:w-auto"
+              onClick={form.handleSubmit(onSubmit)}
+            >
+              {isSubmitting ? "Guardando..." : "Crear Dueño"}
+            </Button>
+          </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )
