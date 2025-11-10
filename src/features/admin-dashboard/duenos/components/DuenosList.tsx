@@ -35,6 +35,7 @@ import { useDuenoContext } from "../context/DuenoContext"
 import { DuenoDetails } from "../types"
 import AddDuenoModal from "./AddDuenoModal"
 import EditDuenoModal from "./EditDuenoModal"
+import DuenoFilters from "./DuenoFilters"
 
 export default function DuenosList() {
   const { duenos, loading, getDuenos, deleteDueno } = useDuenoContext()
@@ -131,10 +132,13 @@ export default function DuenosList() {
     <>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Lista de Dueños</h2>
-        <Button onClick={handleAddClick}>
-          <Plus className="mr-2 h-4 w-4" />
-          Agregar Dueño
-        </Button>
+        <div className="flex flex-col md:flex-row gap-4 items-center">
+          <DuenoFilters />
+          <Button onClick={handleAddClick}>
+            <Plus className="mr-2 h-4 w-4" />
+            Agregar Dueño
+          </Button>
+        </div>
       </div>
 
       <div className="rounded-md border">
@@ -188,7 +192,7 @@ export default function DuenosList() {
                   </TableCell>
                   <TableCell>
                     <Badge variant="secondary">
-                      {dueno.cantidadMascota || 0} mascota{(dueno.cantidadMascota || 0) !== 1 ? 's' : ''}
+                      {dueno.cantidadmascotas || 0} mascota{(dueno.cantidadmascotas || 0) !== 1 ? 's' : ''}
                     </Badge>
                   </TableCell>
                   <TableCell>
@@ -211,7 +215,7 @@ export default function DuenosList() {
                           Editar
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem 
+                        <DropdownMenuItem
                           className="text-red-600"
                           onClick={() => handleDeleteClick(dueno)}
                         >
@@ -229,14 +233,14 @@ export default function DuenosList() {
       </div>
 
       {/* Add Dueño Modal */}
-      <AddDuenoModal 
+      <AddDuenoModal
         open={isAddModalOpen}
         onOpenChange={setIsAddModalOpen}
       />
 
       {/* Edit Dueño Modal */}
       {duenoToEdit && (
-        <EditDuenoModal 
+        <EditDuenoModal
           open={isEditModalOpen}
           onOpenChange={setIsEditModalOpen}
           dueno={duenoToEdit}

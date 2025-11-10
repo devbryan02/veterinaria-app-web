@@ -1,17 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Search, Filter } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { useDuenoContext } from "../context/DuenoContext"
 
 export default function DuenoFilters() {
@@ -20,10 +11,16 @@ export default function DuenoFilters() {
 
   const handleSearch = async (value: string) => {
     setSearchTerm(value)
-    if (value.trim()) {
-      await searchDuenos(value)
-    } else {
+    const trimmed = value.trim()
+
+    if (trimmed.length === 0) {
       await getDuenos()
+      return
+    }
+
+    // Solo hacer fetch cuando haya al menos 3 caracteres
+    if (trimmed.length >= 4) {
+      await searchDuenos(trimmed)
     }
   }
 
@@ -34,27 +31,12 @@ export default function DuenoFilters() {
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
-              placeholder="Buscar por nombre, email o teléfono..."
+              placeholder="Buscar por nombre y DNI..."
               value={searchTerm}
               onChange={(e) => handleSearch(e.target.value)}
               className="pl-9"
             />
           </div>
-          
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Filter className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Filtrar por</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Todos los dueños</DropdownMenuItem>
-              <DropdownMenuItem>Con mascotas</DropdownMenuItem>
-              <DropdownMenuItem>Sin mascotas</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </div>
     </>

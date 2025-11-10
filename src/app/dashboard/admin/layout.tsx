@@ -34,15 +34,15 @@ const sidebarNavItems = [
     href: "/dashboard/admin",
     icon: LayoutDashboard,
   },
+   {
+    title: "Dueños",
+    href: "/dashboard/admin/duenos",
+    icon: Users,
+  },
   {
     title: "Mascotas",
     href: "/dashboard/admin/mascotas",
     icon: PawPrint,
-  },
-  {
-    title: "Dueños",
-    href: "/dashboard/admin/duenos",
-    icon: Users,
   },
   {
     title: "Reportes",
@@ -183,7 +183,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src="/avatars/admin.png" alt="Admin" />
+                    <AvatarImage src="/avatars/vercel.svg" alt="Admin" />
                     <AvatarFallback>AD</AvatarFallback>
                   </Avatar>
                 </Button>

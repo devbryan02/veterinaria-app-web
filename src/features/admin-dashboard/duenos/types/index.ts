@@ -18,7 +18,7 @@ export type DuenoDetails = {
     direccion: string;
     telefono: string;
     correo: string;
-    cantidadMascota: number;
+    cantidadmascotas: number;
 }
 
 export type DuenoUpdateIgnorePasswordAndLocation = {
