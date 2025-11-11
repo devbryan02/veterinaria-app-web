@@ -29,12 +29,13 @@ export const ENDPOINTS = {
     mascotas: {
       list: '/admin/mascota',
       create: '/admin/mascota',
-      getById: (id: number) => `/admin/mascota/${id}`,
-      update: (id: number) => `/admin/mascota/${id}`,
-      delete: (id: number) => `/admin/mascota/${id}`,
+      getById: (id: string) => `/admin/mascota/${id}`,
+      update: (id: string) => `/admin/mascota/${id}`,
+      delete: (id: string) => `/admin/mascota/${id}`,
       search: '/admin/mascota/search',
-      vacunas: (id: number) => `/admin/mascota/${id}/vacunas`,
-      historial: (id: number) => `/admin/mascota/${id}/historial`,
+      filter: '/admin/mascota/filter',
+      vacunas: (id: string) => `/admin/mascota/${id}/vacunas`,
+      historial: (id: string) => `/admin/mascota/${id}/historial`,
     },
   },
 

@@ -54,7 +54,7 @@ export default function MapComponent({ position, onLocationSelect }: MapComponen
       center={[position.lat, position.lng]}
       zoom={13}
       style={{ height: '100%', width: '100%' }}
-      key={`${position.lat}-${position.lng}`} // Forzar re-render cuando cambie la posición
+      key={`${position.lat}-${position.lng}`} 
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

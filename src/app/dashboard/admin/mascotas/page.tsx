@@ -1,10 +1,5 @@
-function PageMascotas() {
-    return (
-        <div>
-            <h1>Lista de Mascotas</h1>
-            {/* Aquí puedes agregar la lógica para mostrar la lista de mascotas */}
-        </div>
-    );
-}
+import MascotasClient from "@/src/features/admin-dashboard/mascotas/components/MascotasClient";
 
-export default PageMascotas;
+export default function PageMascotas() {
+    return <MascotasClient />;
+}

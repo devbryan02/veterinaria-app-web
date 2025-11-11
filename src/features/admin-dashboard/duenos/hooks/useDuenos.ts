@@ -76,7 +76,6 @@ const useDuenos = (): UseDuenosReturn => {
             const response: DuenoCreateResponse = await create(payload);
 
             if (response.success) {
-                // Como el backend no retorna data, recarga la lista
                 await getDuenos();
                 toast.success(`El dueño ${payload.nombre} ha sido creado exitosamente`);
                 return true;
@@ -103,14 +102,12 @@ const useDuenos = (): UseDuenosReturn => {
             const response: DuenoUpdateResponse = await updateIgnorePasswordAndLocation(payload, id);
 
             if (response.success) {
-                // Como el backend no retorna data, obtén los datos actualizados
                 const updatedDueno = await findById(id);
                 if (updatedDueno) {
                     setDuenos(prev => prev.map(dueno => 
                         dueno.id === id ? updatedDueno : dueno
                     ));
                 } else {
-                    // Si no se puede obtener el dueño actualizado, recarga toda la lista
                     await getDuenos();
                 }
                 toast.success(`Los datos de ${payload.nombre} han sido actualizados correctamente`);
