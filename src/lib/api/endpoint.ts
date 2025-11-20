@@ -45,6 +45,13 @@ export const ENDPOINTS = {
       delete: (id: string) => `/admin/vacuna/${id}`,
       filter: '/admin/vacuna/filter',
       findByDateRange: '/admin/vacuna/date-range',
+    },
+    reportes: {
+      exportByDuenoId: (duenoId: string) => `/admin/reporte/dueno/${duenoId}`,
+      exportAllData: '/admin/reporte/todos',
+    },
+    stats: {
+      overview: '/admin/stats/overview',
     }
   },
 
