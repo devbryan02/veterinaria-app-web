@@ -1,5 +1,5 @@
-import { MascotaProvider } from '@/src/features/admin-dashboard/mascotas/context/MascotaContext';
-import MascotaPageDetails from '@/src/features/admin-dashboard/mascotas/components/MascotaPageDetails';
+import { MascotaProvider } from '@/src/features/veterinaria-dashboard/mascotas/context/MascotaContext';
+import MascotaPageDetails from '@/src/features/veterinaria-dashboard/mascotas/components/MascotaPageDetails';
 
 function MascotaPageHome() {
     return (

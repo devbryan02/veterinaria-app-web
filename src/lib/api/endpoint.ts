@@ -1,77 +1,46 @@
-import { filter } from "@/src/features/admin-dashboard/mascotas/services/MascotaService";
 
 export const ENDPOINTS = {
-  // =====================
-  // Auth (general)
-  // =====================
-  auth: {
-    login: '/auth/login',
-    logout: '/auth/logout',
-    register: '/auth/register',
-    refresh: '/auth/refresh',
-    me: '/auth/me', 
-  },
-
+ 
   // =====================
   // Admin (gestiona todo)
   // =====================
-  admin: {
+  veterinaria: {
     // Dueños
     duenios: {
-      list: '/admin/dueno',
-      create: '/admin/dueno',
-      getById: (id: string) => `/admin/dueno/${id}`,
-      update: (id: string) => `/admin/dueno/${id}`,
-      delete: (id: string) => `/admin/dueno/${id}`,
-      search: '/admin/dueno/search',
-      mascotas: (duenoId: string) => `/admin/dueno/${duenoId}/mascotas`, 
+      list: '/veterinaria/dueno',
+      create: '/veterinaria/dueno',
+      getById: (id: string) => `/veterinaria/dueno/${id}`,
+      update: (id: string) => `/veterinaria/dueno/${id}`,
+      delete: (id: string) => `/veterinaria/dueno/${id}`,
+      search: '/veterinaria/dueno/search',
+      details: (id: string) => `/veterinaria/dueno/details/${id}`,
     },
 
     // Mascotas
     mascotas: {
-      list: '/admin/mascota',
-      create: '/admin/mascota',
-      getById: (id: string) => `/admin/mascota/${id}`,
-      update: (id: string) => `/admin/mascota/${id}`,
-      delete: (id: string) => `/admin/mascota/${id}`,
-      search: '/admin/mascota/search',
-      filter: '/admin/mascota/filter',
-      page: (id: string) => `/admin/mascota/page/${id}`,
+      list: '/veterinaria/mascota',
+      create: '/veterinaria/mascota',
+      getById: (id: string) => `/veterinaria/mascota/${id}`,
+      update: (id: string) => `/veterinaria/mascota/${id}`,
+      delete: (id: string) => `/veterinaria/mascota/${id}`,
+      search: '/veterinaria/mascota/search',
+      filter: '/veterinaria/mascota/filter',
+      details: (id: string) => `/veterinaria/mascota/details/${id}`,
     },
     vacunas: {
-      list: '/admin/vacuna',
-      create: '/admin/vacuna',
-      getById: (id: string) => `/admin/vacuna/${id}`,
-      delete: (id: string) => `/admin/vacuna/${id}`,
-      filter: '/admin/vacuna/filter',
-      findByDateRange: '/admin/vacuna/date-range',
+      list: '/veterinaria/vacuna',
+      create: '/veterinaria/vacuna',
+      getById: (id: string) => `/veterinaria/vacuna/${id}`,
+      delete: (id: string) => `/veterinaria/vacuna/${id}`,
+      filter: '/veterinaria/vacuna/filter',
+      findByDateRange: '/veterinaria/vacuna/date-range',
     },
     reportes: {
-      exportByDuenoId: (duenoId: string) => `/admin/reporte/dueno/${duenoId}`,
-      exportAllData: '/admin/reporte/todos',
+      exportByDuenoId: (duenoId: string) => `/veterinaria/reporte/dueno/${duenoId}`,
+      exportAllData: '/veterinaria/reporte/todos',
     },
     stats: {
-      overview: '/admin/stats/overview',
+      overview: '/veterinaria/stats/overview',
     }
-  },
-
-  // =====================
-  // Dueño (gestiona su cuenta y sus mascotas)
-  // =====================
-  dueno: {
-    profile: {
-      get: '/dueno/profile',
-      update: '/dueno/profile',
-    },
-
-    mascotas: {
-      list: '/dueno/mascota',
-      create: '/dueno/mascota',
-      getById: (id: number) => `/dueno/mascota/${id}`,
-      update: (id: number) => `/dueno/mascota/${id}`,
-      delete: (id: number) => `/dueno/mascota/${id}`,
-      vacunas: (id: number) => `/dueno/mascota/${id}/vacunas`,
-      historial: (id: number) => `/dueno/mascota/${id}/historial`,
-    },
   },
 } as const

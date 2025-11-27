@@ -48,7 +48,7 @@ export function ConfirmDialog({
             <AlertTriangle className="h-5 w-5" />
             {title}
           </DialogTitle>
-          <DialogDescription className="text-gray-600 whitespace-pre-line">
+          <DialogDescription className="whitespace-pre-line">
             {message}
           </DialogDescription>
         </DialogHeader>

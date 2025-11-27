@@ -1,4 +1,4 @@
-import MascotasClient from "@/src/features/admin-dashboard/mascotas/components/MascotasClient";
+import MascotasClient from "@/src/features/veterinaria-dashboard/mascotas/components/MascotasClient";
 
 export default function PageMascotas() {
     return <MascotasClient />;
