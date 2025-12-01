@@ -2,13 +2,12 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ThemeToggle } from "@/src/components/ThemeToggle"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
+import { ThemeToggle } from "@/src/shared/components/ThemeToggle"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,45 +16,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-  LayoutDashboard,
-  PawPrint,
-  Users,
-  FileText,
-  FileDown,
-  Menu,
-  LogOut,
-  Settings,
-  User
-} from "lucide-react"
-
-const sidebarNavItems = [
-  {
-    title: "Dashboard",
-    href: "/dashboard/admin",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Dueños",
-    href: "/dashboard/admin/duenos",
-    icon: Users,
-  },
-  {
-    title: "Mascotas",
-    href: "/dashboard/admin/mascotas",
-    icon: PawPrint,
-  },
-  {
-    title: "Vacunas",
-    href: "/dashboard/admin/vacunas",
-    icon: FileText,
-  },
-  {
-    title: "Reportes",
-    href: "/dashboard/admin/reportes",
-    icon: FileDown,
-  },
-]
+import { LayoutDashboard, Users, LogOut, Shield, ExternalLink, Crown } from "lucide-react"
+import { AuthGuard } from "@/src/features/auth/context/AuthGuard"
+import { useAuthContext } from "@/src/features/auth/context/AuthContext"
+import { toast } from "sonner"
 
 interface AdminLayoutProps {
   children: React.ReactNode
@@ -63,174 +27,216 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const pathname = usePathname()
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const router = useRouter()
   const [mounted, setMounted] = useState(false)
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
+
+  const { user, logout } = useAuthContext()
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
+  const handleLogout = async () => {
+    setIsLoggingOut(true)
+    
+    try {
+      await logout()
+      toast.success("Sesión cerrada exitosamente")
+      router.push('/login')
+    } catch (error: any) {
+      console.error('Error durante logout:', error)
+      toast.success("Sesión cerrada")
+      router.push('/login')
+    } finally {
+      setIsLoggingOut(false)
+    }
+  }
+
+  const getUserInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(word => word.charAt(0))
+      .join('')
+      .toUpperCase()
+      .substring(0, 2)
+  }
+
   if (!mounted) {
     return (
-      <div className="flex h-screen overflow-hidden bg-background">
-        <div className="hidden w-64 flex-col border-r lg:flex">
-          <div className="flex h-16 items-center border-b px-6">
-            <div className="h-6 w-6 bg-muted rounded animate-pulse" />
-            <div className="ml-2 h-6 w-20 bg-muted rounded animate-pulse" />
-          </div>
-          <div className="flex-1 px-3 py-4 space-y-2">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div key={i} className="flex items-center rounded-lg px-3 py-2">
-                <div className="h-4 w-4 bg-muted rounded animate-pulse mr-3" />
-                <div className="h-4 w-16 bg-muted rounded animate-pulse" />
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="flex flex-1 flex-col overflow-hidden">
-          <header className="flex h-16 items-center border-b px-4 lg:px-6">
-            <div className="flex flex-1 items-center justify-between">
-              <div className="h-6 w-48 bg-muted rounded animate-pulse" />
-              <div className="h-8 w-8 bg-muted rounded-full animate-pulse" />
-            </div>
-          </header>
-          <main className="flex-1 overflow-y-auto p-4 lg:p-6">
-            <div className="h-64 w-full bg-muted rounded animate-pulse" />
-          </main>
+      <div className="min-h-screen bg-lienar-to-br from-background via-background to-muted/20 flex items-center justify-center">
+        <div className="animate-pulse">
+          <Shield className="h-12 w-12 text-primary" />
         </div>
       </div>
     )
   }
 
-  const SidebarContent = () => (
-    <div className="flex h-full flex-col">
-      <div className="flex h-16 items-center border-b px-6">
-        <PawPrint className="h-6 w-6 text-primary" />
-        <span className="ml-2 text-lg font-semibold">VetAdmin</span>
-      </div>
-
-      <ScrollArea className="flex-1 px-3 py-4">
-        <nav className="space-y-1">
-          {sidebarNavItems.map((item) => {
-            const Icon = item.icon
-            const isActive = pathname === item.href
-            
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "flex items-center rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
-                  "hover:bg-accent hover:text-accent-foreground",
-                  isActive
-                    ? "bg-accent text-accent-foreground shadow-sm"
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-                onClick={() => setSidebarOpen(false)}
-              >
-                <Icon className="mr-3 h-4 w-4 flex-shrink-0" />
-                <span>{item.title}</span>
-              </Link>
-            )
-          })}
-        </nav>
-      </ScrollArea>
-
-      {/* Footer del sidebar con info del usuario */}
-      <div className="border-t p-4">
-        <div className="flex items-center gap-3">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src="/avatars/vercel.svg" alt="Admin" />
-            <AvatarFallback>AD</AvatarFallback>
-          </Avatar>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium truncate">Administrador</p>
-            <p className="text-xs text-muted-foreground truncate">admin@vet.com</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-
   return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Desktop Sidebar */}
-      <aside className="hidden w-64 flex-col border-r bg-card lg:flex">
-        <SidebarContent />
-      </aside>
+    <AuthGuard requiredRoles={['ADMIN']}>
+      <div className="min-h-screen bg-lienar-to-br from-background via-background to-muted/20">
+        {/* Header mejorado */}
+        <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/95 backdrop-blur-md supports-backdrop-filter:bg-background/80 shadow-sm">
+          <div className="container mx-auto flex h-16 max-w-7xl items-center px-6">
+            {/* Logo y navegación */}
+            <div className="mr-6 flex items-center">
+              <Link 
+                href="/dashboard/admin" 
+                className="mr-8 flex items-center space-x-3 group transition-all duration-200 hover:scale-105"
+              >
+                <div className="relative">
+                  <Shield className="h-8 w-8 text-primary group-hover:text-primary/80 transition-colors" />
+                  <Crown className="h-3 w-3 text-amber-500 absolute -top-1 -right-1" />
+                </div>
+                <span className="hidden font-bold text-xl bg-lienar-to-r from-primary to-primary/70 bg-clip-text text-transparent sm:inline-block">
+                  Admin Panel
+                </span>
+              </Link>
+              
+              {/* Navegación principal */}
+              <nav className="hidden md:flex items-center space-x-1">
+                <Link
+                  href="/dashboard/admin"
+                  className={cn(
+                    "flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                    "hover:bg-accent/50 hover:text-primary",
+                    pathname === "/dashboard/admin" 
+                      ? "bg-primary/10 text-primary border border-primary/20" 
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  <LayoutDashboard className="mr-2 h-4 w-4" />
+                  Dashboard
+                </Link>
+                <Link
+                  href="/dashboard/admin/veterinarios"
+                  className={cn(
+                    "flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                    "hover:bg-accent/50 hover:text-primary",
+                    pathname?.startsWith("/dashboard/admin/veterinarios")
+                      ? "bg-primary/10 text-primary border border-primary/20"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  <Users className="mr-2 h-4 w-4" />
+                  Veterinarios
+                </Link>
+              </nav>
+            </div>
+            
+            {/* Área derecha del header */}
+            <div className="flex flex-1 items-center justify-end space-x-4">
+              {/* Badge de rol */}
+              <Badge 
+                variant="secondary" 
+                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary border border-primary/20"
+              >
+                <Crown className="h-3 w-3" />
+                Administrador
+              </Badge>
 
-      {/* Mobile Sidebar */}
-      <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
-        <SheetContent side="left" className="w-64 p-0">
-          <SidebarContent />
-        </SheetContent>
-      </Sheet>
-
-      {/* Main Content */}
-      <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Header */}
-        <header className="flex h-16 items-center border-b bg-card px-4 lg:px-6">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden mr-2"
-            onClick={() => setSidebarOpen(true)}
-          >
-            <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle sidebar</span>
-          </Button>
-
-          <div className="flex flex-1 items-center justify-between gap-4">
-            <h1 className="text-lg font-semibold truncate">Panel de Administración</h1>
-
-            <div className="flex items-center gap-2">
-              {/* Theme Toggle - Standalone */}
-              <ThemeToggle />
-
-              {/* User Menu */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-9 w-9 rounded-full">
-                    <Avatar className="h-9 w-9">
-                      <AvatarImage src="/avatars/vercel.svg" alt="Admin" />
-                      <AvatarFallback>AD</AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end" forceMount>
-                  <DropdownMenuLabel className="font-normal">
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">Administrador</p>
-                      <p className="text-xs leading-none text-muted-foreground">
-                        admin@veterinaria.com
-                      </p>
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Perfil</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Configuración</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-destructive focus:text-destructive">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Cerrar sesión</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              {/* Controles */}
+              <div className="flex items-center space-x-2">
+                <ThemeToggle />
+                
+                {/* Dropdown del usuario */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button 
+                      variant="ghost" 
+                      className="relative h-10 w-10 rounded-full ring-2 ring-transparent hover:ring-primary/20 transition-all duration-200"
+                    >
+                      <Avatar className="h-9 w-9">
+                        <AvatarFallback className="bg-linear-to-br from-primary/20 to-primary/10 text-primary font-semibold">
+                          {user?.nombre ? getUserInitials(user.nombre) : 'AD'}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-64" align="end" forceMount>
+                    <DropdownMenuLabel className="font-normal">
+                      <div className="flex flex-col space-y-2">
+                        <div className="flex items-center space-x-2">
+                          <div className="flex-1">
+                            <p className="text-sm font-medium leading-none">
+                              {user?.nombre || 'Administrador'}
+                            </p>
+                            <p className="text-xs leading-none text-muted-foreground mt-1">
+                              {user?.correo || 'admin@veterinaria.com'}
+                            </p>
+                          </div>
+                          <Badge variant="outline" className="text-xs">
+                            Admin
+                          </Badge>
+                        </div>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link 
+                        href="/dashboard/veterinaria" 
+                        target="_blank"
+                        className="flex items-center cursor-pointer"
+                      >
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Dashboard Veterinario
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem 
+                      className="text-destructive hover:text-destructive focus:text-destructive cursor-pointer"
+                      onClick={handleLogout}
+                      disabled={isLoggingOut}
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>{isLoggingOut ? 'Cerrando sesión...' : 'Cerrar sesión'}</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
           </div>
         </header>
 
-        {/* Page Content */}
-        <main className="flex-1 overflow-y-auto bg-background p-4 lg:p-6">
-          {children}
+        {/* Navegación móvil */}
+        <div className="md:hidden border-b border-border/50 bg-background/95">
+          <nav className="container mx-auto flex items-center space-x-1 px-6 py-2">
+            <Link
+              href="/dashboard/admin"
+              className={cn(
+                "flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                pathname === "/dashboard/admin" 
+                  ? "bg-primary/10 text-primary" 
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <LayoutDashboard className="mr-2 h-4 w-4" />
+              Dashboard
+            </Link>
+            <Link
+              href="/dashboard/admin/veterinarios"
+              className={cn(
+                "flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                pathname?.startsWith("/dashboard/admin/veterinarios")
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <Users className="mr-2 h-4 w-4" />
+              Veterinarios
+            </Link>
+          </nav>
+        </div>
+
+        {/* Contenido principal centrado */}
+        <main className="flex-1 flex justify-center">
+          <div className="w-full max-w-7xl mx-auto px-6 py-8">
+            <div className="w-full">
+              {children}
+            </div>
+          </div>
         </main>
       </div>
-    </div>
+    </AuthGuard>
   )
 }

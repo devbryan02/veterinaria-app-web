@@ -1,5 +1,7 @@
 import axios from "axios";
+import { toast } from "sonner";
 import type { ApiErrorResponse } from "./types";
+import { tokenStorage } from "./token-storage";
 
 // Clase personalizada para errores de API
 export class ApiError extends Error {
@@ -14,17 +16,12 @@ export class ApiError extends Error {
     }
 }
 
-const apiClient = axios.create({
-    baseURL: "http://localhost:8080/api/v1",
-    headers: {
-        "Content-Type": "application/json",
-    },
-});
+const apiClient = axios.create({baseURL: "http://localhost:8080/api/v1"});
 
 // Interceptor de solicitud para agregar tokens de autenticación 
 apiClient.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem("authToken");
+        const token = tokenStorage.getToken();
         if (token) {
             config.headers["Authorization"] = `Bearer ${token}`;
         }
@@ -41,13 +38,30 @@ apiClient.interceptors.response.use(
         // Respuesta exitosa 
         return response;
     },
-    (error) => {
+    async (error) => {
+        // Si el token expiró o es inválido (401 o 403)
+        if (error.response?.status === 401 || error.response?.status === 403) {
+            // Limpiar tokens y datos de usuario
+            tokenStorage.clearAll();
+            
+            // Mostrar mensaje de sesión expirada
+            toast.error("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.", {
+                duration: 4000,
+                position: "top-center"
+            });
+            
+            // Redirigir al login después de un pequeño delay
+            setTimeout(() => {
+                window.location.href = '/login';
+            }, 1000);
+            
+            return Promise.reject(error);
+        }
+
         // Manejar errores del servidor
         if (error.response) {
-            // El servidor respondió con un código de estado fuera del rango 2xx
             const { status, data } = error.response;
             
-            // Normalizar la respuesta de error según tu ApiErrorResponse
             const apiErrorData: ApiErrorResponse = {
                 timestamp: data?.timestamp || new Date().toISOString(),
                 status: status,
@@ -57,14 +71,12 @@ apiClient.interceptors.response.use(
                 details: data?.details || {}
             };
             
-            // Lanzar error personalizado
             throw new ApiError(
                 apiErrorData.message || "Error en la API",
                 status,
                 apiErrorData
             );
         } else if (error.request) {
-            // La petición se hizo pero no se recibió respuesta (error de red)
             throw new ApiError(
                 "Error de conexión - no se pudo conectar al servidor",
                 0,
@@ -77,7 +89,6 @@ apiClient.interceptors.response.use(
                 }
             );
         } else {
-            // Algo pasó al configurar la petición
             throw new ApiError(
                 error.message || "Error desconocido",
                 undefined,

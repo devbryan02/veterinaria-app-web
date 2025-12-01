@@ -1,8 +1,28 @@
+import { get } from "http";
 
 export const ENDPOINTS = {
+
+  // =====================
+  // auth 
+  // =====================
+  auth: {
+        login: '/auth/login',
+    },
+
+  // =====================
+  // admin gestiona veterinarias
+  // =====================
+  admin: {
+    veterinaria: {
+      list: '/admin/vet',
+      create: '/admin/vet/register',
+      getById: (id: string) => `/admin/vet/${id}`,
+      block: (id: string) => `/admin/vet/${id}/toggle-block`,
+    }
+  },
  
   // =====================
-  // Admin (gestiona todo)
+  // veterinaria gestiona mascotas y dueños
   // =====================
   veterinaria: {
     // Dueños
@@ -41,6 +61,9 @@ export const ENDPOINTS = {
     },
     stats: {
       overview: '/veterinaria/stats/overview',
+    },
+    imagen:{
+      upload: '/veterinaria/mascota/imagen/upload',
     }
   },
 } as const
