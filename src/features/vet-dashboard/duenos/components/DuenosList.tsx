@@ -252,7 +252,7 @@ export default function DuenosList() {
                       >
                         <TableCell className="font-medium">
                           <div className="flex items-center gap-2">
-                            <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                               <span className="text-xs font-semibold text-primary">
                                 {dueno.nombre?.charAt(0).toUpperCase() || 'N'}
                               </span>
@@ -262,13 +262,13 @@ export default function DuenosList() {
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center gap-1.5">
-                            <IdCard className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                            <IdCard className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                             <span className="truncate text-sm">{dueno.dni || 'Sin DNI'}</span>
                           </div>
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center gap-1.5">
-                            <Mail className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                            <Mail className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                             <span className="truncate text-sm" title={dueno.correo}>
                               {dueno.correo || 'Sin correo'}
                             </span>
@@ -276,7 +276,7 @@ export default function DuenosList() {
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center gap-1.5">
-                            <Phone className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                            <Phone className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                             <span className="truncate text-sm">{dueno.telefono || 'Sin teléfono'}</span>
                           </div>
                         </TableCell>

@@ -108,10 +108,10 @@ export default function MascotasList() {
           <TableCell><Skeleton className="h-4 w-[120px]" /></TableCell>
           <TableCell><Skeleton className="h-4 w-[90px]" /></TableCell>
           <TableCell><Skeleton className="h-4 w-[70px]" /></TableCell>
-          <TableCell><Skeleton className="h-4 w-[80px]" /></TableCell>
+          <TableCell><Skeleton className="h-4 w-20" /></TableCell>
           <TableCell><Skeleton className="h-4 w-[50px]" /></TableCell>
           <TableCell><Skeleton className="h-4 w-[60px]" /></TableCell>
-          <TableCell><Skeleton className="h-4 w-[80px]" /></TableCell>
+          <TableCell><Skeleton className="h-4 w-20" /></TableCell>
           <TableCell><Skeleton className="h-4 w-[100px]" /></TableCell>
           <TableCell><Skeleton className="h-8 w-8" /></TableCell>
         </TableRow>
@@ -241,10 +241,10 @@ export default function MascotasList() {
                       <TableHead className="font-semibold w-[90px]">Especie</TableHead>
                       <TableHead className="font-semibold w-[100px]">Raza</TableHead>
                       <TableHead className="font-semibold w-[90px]">Edad</TableHead>
-                      <TableHead className="font-semibold w-[80px]">Sexo</TableHead>
+                      <TableHead className="font-semibold w-20">Sexo</TableHead>
                       <TableHead className="font-semibold w-[110px]">Temperamento</TableHead>
                       <TableHead className="font-semibold w-[140px]">Dueño</TableHead>
-                      <TableHead className="font-semibold w-[80px]">Acciones</TableHead>
+                      <TableHead className="font-semibold w-20">Acciones</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -277,7 +277,7 @@ export default function MascotasList() {
                         >
                           <TableCell className="font-medium">
                             <div className="flex items-center gap-2">
-                              <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                              <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                                 <Heart className="h-3.5 w-3.5 text-primary" />
                               </div>
                               <span className="truncate text-sm">{mascota.nombre || 'Sin nombre'}</span>
@@ -310,7 +310,7 @@ export default function MascotasList() {
                           </TableCell>
                           <TableCell className="text-sm truncate" title={mascota.dueno}>
                             <div className="flex items-center gap-1.5">
-                              <Users className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                              <Users className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                               <span className="truncate text-xs">{mascota.dueno || 'Sin dueño'}</span>
                             </div>
                           </TableCell>
@@ -364,7 +364,7 @@ export default function MascotasList() {
             {validMascotas.length > 0 && (
               <div className="mt-4 flex items-center justify-between gap-4 p-3 rounded-lg bg-muted/30 border">
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Info className="h-4 w-4 flex-shrink-0" />
+                  <Info className="h-4 w-4 shrink-0" />
                   <span>
                     Mostrando <span className="font-medium text-foreground">{validMascotas.length}</span> mascota{validMascotas.length !== 1 ? 's' : ''}
                   </span>
