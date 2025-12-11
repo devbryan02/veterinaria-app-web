@@ -15,7 +15,7 @@ import { Campaign, Benefit, Step, Stat, Feature } from "../types";
 
 export const campaigns: Campaign[] = [
   {
-    title: "Campaña de Vacunación",
+    title: "Campaña de Vacunación 2026 ",
     subtitle: "Diciembre 2025",
     description: "Vacuna antirrábica gratuita para todas las mascotas registradas",
     date: "Todo el mes",
