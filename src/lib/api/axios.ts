@@ -16,8 +16,12 @@ export class ApiError extends Error {
     }
 }
 
-const apiClient = axios.create({baseURL: "http://localhost:8080/api/v1"});
-//const apiClient = axios.create({baseURL: "https://vetapp-l3g3.onrender.com/api/v1"});
+// Para ejecuciones locales spring boot
+//const apiClient = axios.create({baseURL: "http://localhost:8080/api/v1"});
+
+// Para usar en producción railway 
+const apiClient = axios.create({baseURL: "https://vetmuniback-production.up.railway.app/api/v1"});
+
 
 // Interceptor de solicitud para agregar tokens de autenticación 
 apiClient.interceptors.request.use(
