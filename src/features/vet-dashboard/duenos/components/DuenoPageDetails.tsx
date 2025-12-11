@@ -8,10 +8,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
 import { 
     ArrowLeft, Phone, Mail, User, PawPrint, MapPin, 
-    Gauge, Calendar, Navigation, Building, IdCard 
+    Gauge, Navigation, Building, IdCard 
 } from 'lucide-react';
 import DuenoPageDetailsSkeleton from './DuenoPageDetailsSkeleton';
 import DuenoLocationMap from './DuenoLocationMap';

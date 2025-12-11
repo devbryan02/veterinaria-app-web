@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { MoreHorizontal, Shield, ShieldOff, Phone, Mail, IdCard, UserPlus, Activity, UserCheck, UserX } from "lucide-react"
+import { MoreHorizontal, Shield, ShieldOff, Phone, Mail, IdCard, UserCheck, UserX } from "lucide-react"
 import {
   Table,
   TableBody,

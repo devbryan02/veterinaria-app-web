@@ -1,6 +1,9 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
 import { LoginForm } from "@/src/features/auth/components/LoginForm";
-import { Heart, Shield, Clock, Users } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Shield, Clock, Users, ArrowLeft } from "lucide-react";
+import Image from "next/image";
 
 function LoginPage() {
     return (
@@ -8,18 +11,21 @@ function LoginPage() {
             {/* Sección izquierda - Información */}
             <div className="lg:w-1/2 flex flex-col justify-center p-8 lg:p-16">
                 <div className="max-w-lg mx-auto lg:mx-0">
-                    {/* Logo y título principal */}
+                    {/* Logo municipalidad */}
                     <div className="text-center lg:text-left mb-8">
-                        <div className="flex items-center justify-center lg:justify-start mb-4">
-                            <div className="bg-primary rounded-full p-3">
-                                <Heart className="h-8 w-8 text-primary-foreground" />
+                        <div className="flex items-center justify-center lg:justify-start mb-6">
+                            <div className="relative h-24 w-full max-w-[320px]">
+                                <Image
+                                    src="/images/landing/logomuni.webp"
+                                    alt="Municipalidad Distrital Andrés Avelino Cáceres Dorregaray"
+                                    fill
+                                    className="object-contain object-center lg:object-left"
+                                    priority
+                                />
                             </div>
                         </div>
-                        <h1 className="text-4xl font-bold text-foreground mb-2">
-                            VetRegistry
-                        </h1>
                         <p className="text-xl text-muted-foreground">
-                            Sistema integral de gestión veterinaria
+                            Registro de Mascotas Municipal
                         </p>
                     </div>
 
@@ -38,7 +44,7 @@ function LoginPage() {
                         </div>
 
                         <div className="flex items-start space-x-4">
-                            <div className="bg-primary/20 rounded-lg p-2">
+                            <div className="bg-primary/10 rounded-lg p-2">
                                 <Shield className="h-5 w-5 text-primary" />
                             </div>
                             <div>
@@ -50,8 +56,8 @@ function LoginPage() {
                         </div>
 
                         <div className="flex items-start space-x-4">
-                            <div className="bg-accent rounded-lg p-2">
-                                <Clock className="h-5 w-5 text-accent-foreground" />
+                            <div className="bg-primary/10 rounded-lg p-2">
+                                <Clock className="h-5 w-5 text-primary" />
                             </div>
                             <div>
                                 <h3 className="font-semibold text-foreground">Reportes</h3>
@@ -78,14 +84,22 @@ function LoginPage() {
                     <LoginForm />
 
                     {/* Información adicional */}
-                    <div className="mt-8 text-center space-y-4">
+                    <div className="mt-4 text-center space-y-4">
                         <div className="border-t border-border pt-6">
                             <p className="text-sm text-muted-foreground">
                                 ¿Problemas para ingresar?
                             </p>
                             <p className="text-sm text-primary font-medium cursor-pointer hover:underline">
-                                <a href="https://wa.me/+51992450988" target="_blank">Contacta al administrador del sistema</a>
+                                <a href="https://wa.me/+51992450988" target="_blank" rel="noopener noreferrer">
+                                    Contacta al administrador del sistema
+                                </a>
                             </p>
+                        </div>
+                        <div>
+                            <Button variant="ghost" onClick={() => window.location.href="/"}>
+                                <ArrowLeft className="w-5 h-5 mr-2" />
+                                Volver al sitio web
+                            </Button>
                         </div>
                     </div>
                 </div>

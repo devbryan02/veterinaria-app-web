@@ -193,7 +193,7 @@ export const generateMascotaPDF = async (data: MascotaPageDetails): Promise<void
         errorCorrectionLevel: 'L' 
     });
     
-    const bgUrl = '/images/dim-base.png'; 
+    const bgUrl = '/images/dim/dim-base.png'; 
 
     const blob = await pdf(
       <MascotaCard data={data} qrDataUrl={qrDataUrl} bgUrl={bgUrl} />

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { CreditCard, Download } from "lucide-react";
+import { CreditCard } from "lucide-react";
 import { useState } from "react";
 import { MascotaPageDetails } from "../types";
 import { generateMascotaPDF } from "@/src/lib/utils/dim-generador";

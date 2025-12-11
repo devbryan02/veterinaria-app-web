@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
@@ -10,7 +10,6 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { ThemeToggle } from "@/src/shared/components/ThemeToggle"
-import { Metadata } from "next"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,8 +26,6 @@ import {
   FileDown,
   Menu,
   LogOut,
-  Settings,
-  User,
   Stethoscope,
   ChevronRight
 } from "lucide-react"
@@ -68,10 +65,6 @@ const sidebarNavItems = [
     description: "Exportar datos"
   },
 ]
-export const metadata: Metadata = {
-  title: "Dashboard Veterinaria - VetRegistry",
-  description: "Aplicación web para la gestión de una veterinaria",
-};
 
 interface VeterinariaLayoutProps {
   children: React.ReactNode
@@ -169,7 +162,7 @@ export default function VeterinariaLayoutClient({ children }: VeterinariaLayoutP
           </div>
           <div>
             <span className="text-lg font-bold bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-              VetRegistry
+              Muni Vet AACD
             </span>
             <p className="text-xs text-muted-foreground">Sistema Veterinario</p>
           </div>
@@ -352,7 +345,7 @@ export default function VeterinariaLayoutClient({ children }: VeterinariaLayoutP
             <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
               <div className="flex items-center gap-2">
                 <Stethoscope className="h-3.5 w-3.5 text-primary" />
-                <span>Sistema Veterinario Municipal - VetRegistry 2024</span>
+                <span>Sistema Veterinario Municipal {new Date().getFullYear()}</span>
               </div>
               <Badge variant="outline" className="text-[10px] h-5">
                 v1.0.0

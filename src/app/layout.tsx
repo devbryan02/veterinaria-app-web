@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Veterinaria App",
+  title: "Gestión Veterinaria Municipal AACD",
   description: "Aplicación web para la gestión de una veterinaria",
 };
 

@@ -2,7 +2,6 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, Heart, Shield, PawPrint, TrendingUp } from 'lucide-react';
 import { EstadisticasDashboard } from '../types/Index';
-import { cn } from '@/lib/utils';
 
 interface StatsOverviewProps {
     stats: EstadisticasDashboard;

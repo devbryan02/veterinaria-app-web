@@ -9,13 +9,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { 
     ArrowLeft, Phone, Mail, User, PawPrint, Camera, 
-    Shield, Calendar, Plus, Syringe, CheckCircle2, 
-    AlertCircle, Clock, X, ChevronLeft, ChevronRight 
+    Shield, Calendar, Plus, Syringe, Clock, X, ChevronLeft, ChevronRight 
 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import AddImagenModal from './AddImagenModal';
 import GeneratePDFButton from './GeneratePDFButton';
-import { cn } from '@/lib/utils';
 import {
     Dialog,
     DialogContent,
