@@ -17,10 +17,10 @@ export class ApiError extends Error {
 }
 
 // Para ejecuciones locales spring boot
-//const apiClient = axios.create({baseURL: "http://localhost:8080/api/v1"});
+const apiClient = axios.create({baseURL: "http://localhost:8080/api/v1"});
 
 // Para usar en producción railway 
-const apiClient = axios.create({baseURL: "https://vetmuniback-production.up.railway.app/api/v1"});
+//const apiClient = axios.create({baseURL: "https://vetmuniback-production.up.railway.app/api/v1"});
 
 
 // Interceptor de solicitud para agregar tokens de autenticación 
@@ -80,8 +80,14 @@ apiClient.interceptors.response.use(
                     throw new ApiError(apiErrorData.message || "Error de autenticación", status, apiErrorData);
                 }
                 
-                // Token expirado o credenciales inválidas (pero NO bloqueada y NO es login)
-                if (!isLoginEndpoint) {
+                // Si es login endpoint, mostrar el error específico
+                if (isLoginEndpoint) {
+                    toast.error(data?.message || "Credenciales inválidas. Verifica tu email y contraseña.", {
+                        duration: 4000,
+                        position: "bottom-right",
+                    });
+                } else {
+                    // Token expirado o credenciales inválidas (pero NO es login)
                     tokenStorage.clearAll();
                     
                     toast.error("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.", {
